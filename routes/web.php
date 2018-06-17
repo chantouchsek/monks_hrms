@@ -11,5 +11,10 @@
 |
 */
 
-Route::get('robots.txt', 'SeoController@robots');
-Route::get('sitemap.xml', 'SeoController@sitemap');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

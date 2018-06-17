@@ -10,18 +10,18 @@
     {{ $slot }}
 
     {{-- Subcopy --}}
-    @if (isset($subcopy))
+    @isset($subcopy)
         @slot('subcopy')
             @component('mail::subcopy')
                 {{ $subcopy }}
             @endcomponent
         @endslot
-    @endif
+    @endisset
 
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            &copy; {{ date('Y') }} {{ config('app.name') }}. @lang('mails.layout.all_rights_reserved')
+            &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
         @endcomponent
     @endslot
 @endcomponent

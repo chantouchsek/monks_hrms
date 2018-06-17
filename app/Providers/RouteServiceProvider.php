@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -19,45 +18,45 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, etc.
+     *
+     * @return void
      */
     public function boot()
     {
+        //
+
         parent::boot();
     }
 
     /**
      * Define the routes for the application.
+     *
+     * @return void
      */
     public function map()
     {
         $this->mapApiRoutes();
+
         $this->mapWebRoutes();
+
+        //
     }
 
     /**
      * Define the "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
-
-        Route::middleware(['web', 'metas', 'locale', 'localize'])
-            ->prefix(LaravelLocalization::setLocale())
-            ->namespace($this->namespace.'\Frontend')
-            ->group(base_path('routes/public.php'));
-
-        Route::middleware(['web', 'locale'])
-            ->prefix(LaravelLocalization::setLocale())
-            ->namespace($this->namespace)
-            ->group(base_path('routes/auth.php'));
-
-        Route::middleware(['web', 'locale', 'auth', 'can:access backend'])
-            ->prefix(LaravelLocalization::setLocale().'/'.config('app.admin_path'))
-            ->namespace($this->namespace.'\Backend')
+        Route::middleware(['web', 'auth'])
+            ->prefix('admin')
+            ->namespace($this->namespace.'\Admin')
             ->as('admin.')
             ->group(base_path('routes/admin.php'));
     }
@@ -66,11 +65,13 @@ class RouteServiceProvider extends ServiceProvider
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
+     *
+     * @return void
      */
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-            ->middleware('api')
+            ->middleware(['api'])
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
     }

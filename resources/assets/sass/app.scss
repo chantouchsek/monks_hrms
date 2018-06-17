@@ -1,0 +1,17 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+// Icons
+@import "~@coreui/icons/css/coreui-icons.min.css";
+@import "~flag-icon-css/css/flag-icon.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+@import "~simple-line-icons/css/simple-line-icons.css";
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+// Variables
+@import "vendors/pace-progress/pace";
+@import '~@coreui/coreui/scss/coreui';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}

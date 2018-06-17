@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Login;
-use App\Listeners\UserEventListener;
-use App\Listeners\LoginEventListener;
-use App\Listeners\FormSubmissionEventListener;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,26 +13,20 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Login::class => [
-            LoginEventListener::class,
+        'App\Events\Event' => [
+            'App\Listeners\EventListener',
         ],
     ];
 
     /**
-     * Class event subscribers.
-     *
-     * @var array
-     */
-    protected $subscribe = [
-        UserEventListener::class,
-        FormSubmissionEventListener::class,
-    ];
-
-    /**
      * Register any events for your application.
+     *
+     * @return void
      */
     public function boot()
     {
         parent::boot();
+
+        //
     }
 }

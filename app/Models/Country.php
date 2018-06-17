@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -10,30 +12,20 @@ use Illuminate\Support\Facades\Gate;
  *
  * @property int $id
  * @property string $name
- * @property array $message
- * @property string|null $recipients
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property mixed $array_recipients
  * @property mixed $can_delete
  * @property mixed $can_edit
- * @property mixed $html_message
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereMessage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereRecipients($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Country extends Model
 {
-    protected $fillable = ['name', 'kh_name', 'slug', 'description', 'status'];
-
-    protected $casts = [
-        'status' => 'boolean'
-    ];
+    protected $fillable = ['name', 'kh_name', 'code', 'description'];
 
     /**
      * @var array
@@ -54,5 +46,14 @@ class Country extends Model
     public function getCanDeleteAttribute()
     {
         return Gate::check('delete metas');
+    }
+
+
+    /**
+     * @return HasMany
+     */
+    public function provinces(): HasMany
+    {
+        return $this->hasMany(Province::class);
     }
 }
